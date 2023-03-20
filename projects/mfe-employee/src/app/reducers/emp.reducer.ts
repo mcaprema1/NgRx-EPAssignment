@@ -44,7 +44,7 @@ export function empReducer(state = initialState, action:Action) {
       //   error: null,
       //   tasks: [...state.tasks, tutorialAction.payload.task]
       // });
-      return [...state, tutorialAction.payload.task];
+      return [...state, tutorialAction.payload];
       default:
         return state;
     }

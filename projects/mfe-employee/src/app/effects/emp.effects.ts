@@ -17,10 +17,9 @@ export class EmployeeEffects {
       ofType<Action.SaveAction>(Action.ActionTypes.SAVE),
       map(action => action.payload),
       mergeMap(payload =>
-        this.apiService.save(payload.task).pipe(
-          map(res => new Action.SaveActionSuccess({ task: res })),
+        this.apiService.save(payload).pipe(
+          map(res => new Action.SaveActionSuccess( res )),
           catchError(error => this.handleError(error)))
-          // catchError(error => console.log(error)
       )));
       private handleError(error : any) {
         return of(new Action.ErrorAction(error));

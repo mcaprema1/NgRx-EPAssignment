@@ -7,7 +7,7 @@ import { Employee } from '../../../model/employee.model';
 import { FormControl } from '@angular/forms';
 import { ApiService } from 'projects/service/api.service';
 import { takeUntil } from 'rxjs/operators';
-import { Store } from '@ngrx/store';
+import { Store , select} from '@ngrx/store';
 import { AppState } from 'projects/mfe-employee/src/app/app.state';
 import * as EmpActions from '../../../mfe-employee/src/app/actions/emp.actions';
 import { DecimalPipe } from "@angular/common";
@@ -32,6 +32,7 @@ export class AppComponent {
   public listOfEmployee : any = [];
   public listOfProject : any =[];
   public fullList : any = []
+  full : any =[];
 
   // listOfEmployee:Observable<string[]> | any;
   SERVER_URL = 'https://run.mocky.io/v3/e0183205-f538-45e2-85b1-20bf565280f2';
@@ -51,8 +52,7 @@ export class AppComponent {
   filteredEmployee$ : Observable<Employee[]> | undefined;
   filter = new FormControl("");
   employeesList : Employee[];
-
-  empStores$ = this.store.select('empStore');
+  empStores : any =[] ;
 
   projects$ = this.http.get<any>(this.PROJECTS_GET_URL).subscribe(res =>{
     this.listOfProject = res;
@@ -73,8 +73,7 @@ export class AppComponent {
         })
       );
       console.log("jjj:", this.employees$, this.filteredEmployee$);
-
-
+      this.empStores = store.select('empStore');
     //   this.http.get<any>(this.SERVER_URL).subscribe(res =>{
     //     this.listOfEmployee = res;
     //     console.log("listOfEmployee ", this.listOfEmployee)
@@ -142,7 +141,7 @@ return this.employeesList.filter(list  => {
 saveToStore(){
   // this.store.dispatch(new EmpActions.saveEmployees(...eps))
   this.employeesList.forEach(emp =>{
-    this.store.dispatch(new EmpActions.SaveAction({task : emp}));
+    this.store.dispatch(new EmpActions.SaveAction(emp));
   })
   alert("Data saved in Store")
   this.viewStore=true;
@@ -206,10 +205,9 @@ selectedProject(event : any, row : any, i : number){
 viewEmployeeStore(){
   console.log("innnnks");
   
-   this.store.select('empStore').subscribe((data =>{
-    this.fullList = data
-  }));
-   console.log("view store : ", this.fullList);
-   
+   this.store.subscribe((data) =>{
+    this.fullList= data.empStore;
+    console.log("view store : ", this.fullList);
+  });
 }
 }
