@@ -7,7 +7,7 @@
           <label class="control-label col-sm-2">Employee Id</label>
           <div class="col-sm-10">
             <input type="text" formControlName="empId" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['empId'].errors }" /> 
+              [ngClass]="{ 'is-invalid': submitted && f['empId'].errors }" />
             <div *ngIf="submitted && f['empId'].errors" class="invalid-feedback">
               <div *ngIf="f['empId'].errors['required']">First Name is required</div>
               <div *ngIf="f['empId'].errors['minlength']">Minimum 3 characters is required</div>
@@ -21,7 +21,7 @@
           <label class="control-label col-sm-2" >First Name</label>
           <div class="col-sm-10">
             <input type="text" formControlName="first_name" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['first_name'].errors }" /> 
+              [ngClass]="{ 'is-invalid': submitted && f['first_name'].errors }" />
             <div *ngIf="submitted && f['first_name'].errors" class="invalid-feedback">
               <div *ngIf="f['first_name'].errors['required']">First Name is required</div>
               <div *ngIf="f['first_name'].errors['minlength']">Minimum 3 characters is required</div>
@@ -80,7 +80,8 @@
             <label class="form-check-label col-sm-2" style=" text-align: right;" for="flexSwitchCheckChecked">Active</label>
             <div class="col-sm-10">
                 <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                  formControlName="Active" checked>
                 </div>
             </div>
           </div>

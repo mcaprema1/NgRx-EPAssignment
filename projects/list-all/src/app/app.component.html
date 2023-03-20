@@ -1,9 +1,14 @@
 
-<!-- <input type="text" #SearchInput  class="form-control" placeholder="Search" />
-<button (click)="search()"> Search</button> -->
-
+<!-- <input type="text" #movieSearchInput  class="form-control" placeholder="Search" /> -->
+<!-- <button (click)="search()"> Search</button> -->
+<form>
+  <div class="form-group form-inline">
+    Full text search:
+    <input class="form-control ml-2" type="text" [formControl]="filter" />
+  </div>
+</form>
 <!-- <input #searchBox type="text" class="form-control" id="search-box" (keyup)="search(searchBox.value)"> -->
-<input #search type="text" placeholder="Search" />
+<!-- <input #search type="text" placeholder="Search" /> -->
 
 <h2 style="text-align: center;">List of Employees</h2>
 <table class="table table-striped" >
@@ -16,8 +21,8 @@
     <th> Address </th>
     <th> Active</th>
   </tr>
-  
-    <tr *ngFor="let d of listOfEmployee; let i = index">
+  <ng-container *ngIf="employees$ | async">
+    <tr *ngFor="let d of filteredEmployee$ | async; let i = index">
       <td> {{d.empId}}</td>
       <td> {{d.first_name}}</td>
       <td> {{d.last_name}} </td>
@@ -26,5 +31,7 @@
       <td> {{d.address}}</td>
       <td>{{d.Active}}</td>
     </tr>
-  
+</ng-container>
 </table>
+
+<button (click)="saveToStore()"> Save to Store</button>

@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { empReducer } from '../../../mfe-employee/src/app/reducers/emp.reducer';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,8 +17,11 @@ import { empReducer } from '../../../mfe-employee/src/app/reducers/emp.reducer';
     AppRoutingModule,
     HttpClientModule,
     StoreModule.forRoot({
-      empStore: empReducer})
+      empStore: empReducer}),
+      FormsModule,
+      ReactiveFormsModule
   ],
+
   providers: [],
   bootstrap: [AppComponent]
 })
