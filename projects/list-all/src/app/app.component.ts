@@ -30,9 +30,12 @@ export class AppComponent {
   title = 'ListAll';
   // listOfEmployee : Employee=[];
   public listOfEmployee : any = [];
+  public listOfProject : any =[];
+  public fullList : any = []
 
   // listOfEmployee:Observable<string[]> | any;
-  SERVER_URL = 'https://run.mocky.io/v3/116d8cce-4e3f-446e-9de0-ea2d5b015f4e';
+  SERVER_URL = 'https://run.mocky.io/v3/e0183205-f538-45e2-85b1-20bf565280f2';
+  PROJECTS_GET_URL = 'https://run.mocky.io/v3/c4da6857-f8ed-493d-8e61-e5ee346bf592';
 
   @ViewChild('search', { static: false }) searchInput: ElementRef | any;
 
@@ -40,6 +43,7 @@ export class AppComponent {
   @ViewChild('SearchInput', { static: true }) movieSearchInput!: ElementRef;
   apiResponse: any;
   isSearching: boolean |any;
+  viewStore=false;
 
   employees$: Observable<Employee[]> =this.http.get<any>(this.SERVER_URL).pipe(delay(1000),
     tap((emps) => this.employeesList = emps) );
@@ -50,11 +54,19 @@ export class AppComponent {
 
   empStores$ = this.store.select('empStore');
 
+  projects$ = this.http.get<any>(this.PROJECTS_GET_URL).subscribe(res =>{
+    this.listOfProject = res;
+    console.log("listOfProject ", this.listOfProject)
+})
+
+
   constructor(private http: HttpClient, private apiService : ApiService, private store: Store<AppState>, pipe : DecimalPipe) {
 
       this.employeesList =[];
       this.filteredEmployee$ = this.filter.valueChanges.pipe(
         startWith(""),
+        distinctUntilChanged(),
+        debounceTime(1000),
         map(text => {
          let text1= text ? text : '';
           return this.search(text1, pipe);
@@ -109,16 +121,18 @@ ngOnInit() {
 
 search(text: string, pipe: PipeTransform) : Employee[] {
   console.log("inn search call", text)
-return this.employeesList.filter(country  => {
+return this.employeesList.filter(list  => {
+  // console.log("fff : ", list)
   const term = text.toLowerCase();
   return (
-    country.empId.toLowerCase().includes(term) ||
-    country.first_name.toLowerCase().includes(term) ||
-    country.last_name.toLowerCase().includes(term) ||
-    country.emailID.toLowerCase().includes(term) ||
-    country.address.toLowerCase().includes(term) ||
-    // country.Active.valueOf()||
-    pipe.transform(Number(country.mobile)).includes(term)
+    list.empId.toLowerCase().includes(term) ||
+    list.first_name.toLowerCase().includes(term) ||
+    list.last_name.toLowerCase().includes(term) ||
+    list.emailID.toLowerCase().includes(term) ||
+    list.address.toLowerCase().includes(term) ||
+    // list.Active.valueOf() ||
+    // list.Active.valueOf()? String(list.Active).includes('true') : String(list.Active).includes('false')  ||
+    pipe.transform(list.mobile).includes(term)
   );
 });
 // }
@@ -130,8 +144,11 @@ saveToStore(){
   this.employeesList.forEach(emp =>{
     this.store.dispatch(new EmpActions.SaveAction({task : emp}));
   })
+  alert("Data saved in Store")
+  this.viewStore=true;
 }
-}
+
+
 // this.store.dispatch(new EmpActions.AddEmp(...eps
 //   ))
 //   let assignedProjects = this.store.select('empStore');
@@ -182,4 +199,17 @@ saveToStore(){
 //   this.searchTerms.next(term);
 // }
 
-
+selectedProject(event : any, row : any, i : number){
+  row.projectId=event.target.value
+  console.log("vvv : ", row, this.employeesList);
+}
+viewEmployeeStore(){
+  console.log("innnnks");
+  
+   this.store.select('empStore').subscribe((data =>{
+    this.fullList = data
+  }));
+   console.log("view store : ", this.fullList);
+   
+}
+}

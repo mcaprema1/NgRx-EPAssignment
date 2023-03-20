@@ -6,6 +6,7 @@ export interface Employee {
     mobile : string
     address : string
     Active : boolean
+    projectId ?: string
 }
 
 export interface Project{
