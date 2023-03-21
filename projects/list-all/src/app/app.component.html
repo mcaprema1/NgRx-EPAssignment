@@ -2,15 +2,20 @@
 <!-- <input type="text" #movieSearchInput  class="form-control" placeholder="Search" /> -->
 <!-- <button (click)="search()"> Search</button> -->
 <form>
-  <div class="form-group form-inline">
-    Full text search:
+  <div style="display:flex;">
+  <div class="form-group form-inline" >
+    Search:
     <input class="form-control ml-2" type="text" [formControl]="filter" />
   </div>
+  <div style="border: solid;">
+     <h2>List of Employees</h2> 
+  </div>
+</div>
 </form>
 <!-- <input #searchBox type="text" class="form-control" id="search-box" (keyup)="search(searchBox.value)"> -->
 <!-- <input #search type="text" placeholder="Search" /> -->
 
-<h2 style="text-align: center;">List of Employees</h2>
+
 <table class="table table-striped margin-class" >
   <tr>
     <th> Emp Id </th>

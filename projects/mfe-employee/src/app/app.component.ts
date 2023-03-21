@@ -14,7 +14,7 @@ export class AppComponent {
   title = 'MFE-Employee';
   registerForm: FormGroup | any;
     submitted = false;
-    SERVER_URL = 'https://09a89f92-edc2-46ae-8b50-65bf2d58fab9.mock.pstmn.io/employees';
+    SERVER_URL = 'https://09a89f92-edc2-46ae-8b50-65bf2d58fab9.mock.pstmn.io/employee/save';
 
     // private store: Store<AppState>
 
@@ -40,19 +40,40 @@ export class AppComponent {
         this.submitted = true;
 
         // stop here if form is invalid
-        if (this.registerForm.invalid) {
-            return;
-        }
+        // if (this.registerForm.invalid) {
+        //     return;
+        // }
         const formData = new FormData();
-    formData.append('empdata', this.registerForm.value);
-        console.log("formdata : ", formData, this.registerForm.value);
+    formData.append('empdata',JSON.stringify(this.registerForm.value));
+       
+        const emp= {"first_name":"Prema"}
+        
+        console.log("formdata : ", emp, typeof(formData),formData);
+        // const emp= [{"empId":"11025","first_name":"Prema","last_name":"palanisamy","emailID":"prema@gmail.com","mobile":1234567890,"address":"omr","Active":true}]
+        // {"empId":"11020","first_name":"Ram","last_name":"Santhanam","emailID":"ram@gmail.com","mobile":2234567890,"adress":"omr","Active":true}]
+        // JSON.stringify(this.registerForm.value)
+        let body = JSON.stringify(this.registerForm.value);
+        let headers = new Headers({'Content-Type': 'application/json'});
+        // let options: {
+        //     headers?: HttpHeaders | {[header: string]: string | string[]},
+        //     observe?: 'body' | 'events' | 'response',
+        //     params?: HttpParams|{[param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>},
+        //     reportProgress?: boolean,
+        //     responseType?: 'arraybuffer'|'blob'|'json'|'text',
+        //     withCredentials?: boolean,
+        // }
 
-        // const emp= [{"empId":"11025","first_name":"Prema","last_name":"palanisamy","emailID":"prema@gmail.com","mobile":"1234567890","address":"omr","Active":"true"},
-        // {"empId":"11020","first_name":"Ram","last_name":"Santhanam","emailID":"ram@gmail.com","mobile":"2234567890","address":"omr","Active":"true"}]
 
-    this.http.post<any>(this.SERVER_URL, JSON.stringify(formData)).subscribe(res =>{
-        console.log("response ",res)
+    this.http.post<any>(this.SERVER_URL, JSON.stringify(this.registerForm.value), { responseType: 'json' }).subscribe
+    ({
+        next : (res) => {
+            console.log("res ", res, typeof(res), res.response )
+            let temp = JSON.parse(JSON.stringify(res));
+            // console.log("temp type ", typeof(temp));
+            console.log("temp : ", temp,typeof(temp) )},
+        error : (err) => console.log("err : ", err)
     })
+
 
 
         // display form values on success

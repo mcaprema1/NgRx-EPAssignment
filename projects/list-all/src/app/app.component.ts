@@ -204,7 +204,6 @@ selectedProject(event : any, row : any, i : number){
 }
 viewEmployeeStore(){
   console.log("innnnks");
-  
    this.store.subscribe((data) =>{
     this.fullList= data.empStore;
     console.log("view store : ", this.fullList);
