@@ -50,12 +50,12 @@ export enum ActionTypes {
 export class SaveAction implements Action {
  readonly type = ActionTypes.SAVE;
   // constructor(public payload: { task: Employee }) { console.log("save action");}
-  constructor(public payload: Employee) { }
+  constructor(public payload: Employee[]) { }
 }
 
 export class SaveActionSuccess implements Action {
   type = ActionTypes.SAVE_SUCCESS;
-  constructor(public payload: Employee ) { }
+  constructor(public payload: Employee[] ) { }
 }
 
 export class ErrorAction implements Action {

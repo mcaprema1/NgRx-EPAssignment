@@ -20,7 +20,7 @@ saveStore() {
     delay(1000)
   )
 }
-save(record: Employee) {
+save(record: Employee[]) {
   console.log("save api service", record);
 
   // let record= this.http.post<Task>(this.API_TASKS_URL, record);

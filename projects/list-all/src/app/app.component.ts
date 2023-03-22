@@ -140,9 +140,9 @@ return this.employeesList.filter(list  => {
 
 saveToStore(){
   // this.store.dispatch(new EmpActions.saveEmployees(...eps))
-  this.employeesList.forEach(emp =>{
-    this.store.dispatch(new EmpActions.SaveAction(emp));
-  })
+  // this.employeesList.forEach(emp =>{
+    this.store.dispatch(new EmpActions.SaveAction(this.employeesList));
+  // })
   alert("Data saved in Store")
   this.viewStore=true;
 }
@@ -205,6 +205,8 @@ selectedProject(event : any, row : any, i : number){
 viewEmployeeStore(){
   console.log("innnnks");
    this.store.subscribe((data) =>{
+    console.log("data : ", data);
+
     this.fullList= data.empStore;
     console.log("view store : ", this.fullList);
   });

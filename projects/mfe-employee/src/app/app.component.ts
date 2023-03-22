@@ -45,10 +45,10 @@ export class AppComponent {
         // }
         const formData = new FormData();
     formData.append('empdata',JSON.stringify(this.registerForm.value));
-       
+
         const emp= {"first_name":"Prema"}
-        
-        console.log("formdata : ", emp, typeof(formData),formData);
+
+        console.log("formdata : ", emp, typeof(formData),formData, this.registerForm.value);
         // const emp= [{"empId":"11025","first_name":"Prema","last_name":"palanisamy","emailID":"prema@gmail.com","mobile":1234567890,"address":"omr","Active":true}]
         // {"empId":"11020","first_name":"Ram","last_name":"Santhanam","emailID":"ram@gmail.com","mobile":2234567890,"adress":"omr","Active":true}]
         // JSON.stringify(this.registerForm.value)
@@ -62,14 +62,16 @@ export class AppComponent {
         //     responseType?: 'arraybuffer'|'blob'|'json'|'text',
         //     withCredentials?: boolean,
         // }
-
-
-    this.http.post<any>(this.SERVER_URL, JSON.stringify(this.registerForm.value), { responseType: 'json' }).subscribe
+        const requestOptions: Object = {
+           responseType: 'text',
+          'Content-Type': 'application/json'
+        }
+    this.http.post<any>(this.SERVER_URL, this.registerForm.value, requestOptions).subscribe
     ({
         next : (res) => {
-            console.log("res ", res, typeof(res), res.response )
-            let temp = JSON.parse(JSON.stringify(res));
-            // console.log("temp type ", typeof(temp));
+            console.log("res ", res, typeof(res) )
+            let temp = JSON.parse(res)
+                   // console.log("temp type ", typeof(temp));
             console.log("temp : ", temp,typeof(temp) )},
         error : (err) => console.log("err : ", err)
     })
