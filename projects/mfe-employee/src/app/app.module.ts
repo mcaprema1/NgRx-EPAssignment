@@ -5,9 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http'
-import { EmployeeEffects } from './effects/emp.effects';
+// import { EmployeeEffects } from './effects/emp.effects';
 import { StoreModule } from '@ngrx/store';
-import { empReducer } from '../../../mfe-employee/src/app/reducers/emp.reducer';
+import { empReducer } from '../../../lib-store/src/lib/reducers/emp.reducer';
+import { LibStoreModule } from 'projects/lib-store/src/public-api';
 
 @NgModule({
   declarations: [
@@ -20,8 +21,9 @@ import { empReducer } from '../../../mfe-employee/src/app/reducers/emp.reducer';
     FormsModule,
     HttpClientModule,
     // EffectsModule.forRoot([EmployeeEffects]),
-    StoreModule.forRoot({
-      empStore: empReducer}),
+    // StoreModule.forRoot({
+    //   empStore: empReducer}),
+      LibStoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, delay, of} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {Employee } from '../../../../model/employee.model'
+import {Employee } from '../model/employee.model'
 
 @Injectable()
 export class ApiService {
@@ -26,6 +26,9 @@ save(record: Employee[]) {
   // let record= this.http.post<Task>(this.API_TASKS_URL, record);
   // record.id = `${++this.COUNT}`;
   return of(record);
+}
+getStore(){
+  
 }
 
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {Employee, Project } from '../../../model/employee.model'
+// import {Employee, Project } from '../../../model/employee.model'
 
 @Component({
   selector: 'app-root',

@@ -46,7 +46,7 @@ module.exports = {
           "@angular/common": { singleton: true, strictVersion: true, requiredVersion: 'auto' }, 
           "@angular/common/http": { singleton: true, strictVersion: true, requiredVersion: 'auto' }, 
           "@angular/router": { singleton: true, strictVersion: true, requiredVersion: 'auto' },
-
+          "lib-store": { singleton: true, import : "projects/lib-store/src/public-api.ts"},
           ...sharedMappings.getDescriptors()
         })
         

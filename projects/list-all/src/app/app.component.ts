@@ -3,13 +3,14 @@ import { HttpClient, HttpParams  } from '@angular/common/http';
 import { debounceTime, map, distinctUntilChanged, filter, startWith,
    switchMap, tap, delay } from "rxjs/operators";
 import {combineLatest, Observable, of, fromEvent, Subject, ReplaySubject} from 'rxjs';
-import { Employee } from '../../../model/employee.model';
+import { Employee } from '../../../lib-store/src/lib/model/employee.model';
+import { empReducer, EmployeeState } from '../../../lib-store/src/lib/reducers/emp.reducer';
 import { FormControl } from '@angular/forms';
-import { ApiService } from 'projects/service/api.service';
+// import { ApiService } from 'projects/service/api.service';
 import { takeUntil } from 'rxjs/operators';
 import { Store , select} from '@ngrx/store';
-import { AppState } from 'projects/mfe-employee/src/app/app.state';
-import * as EmpActions from '../../../mfe-employee/src/app/actions/emp.actions';
+import { AppState } from '../../../lib-store/src/lib/lib-store.util';
+import * as EmpActions from '../../../lib-store/src/lib/actions/emp.actions';
 import { DecimalPipe } from "@angular/common";
 
 const PARAMS = new HttpParams({
@@ -45,7 +46,8 @@ export class AppComponent {
   apiResponse: any;
   isSearching: boolean |any;
   viewStore=false;
-
+ 
+  // employees$ : any =[]
   employees$: Observable<Employee[]> =this.http.get<any>(this.SERVER_URL).pipe(delay(1000),
     tap((emps) => this.employeesList = emps) );
   // countries$: Observable<Country[]>;
@@ -53,16 +55,21 @@ export class AppComponent {
   filter = new FormControl("");
   employeesList : Employee[];
   empStores : any =[] ;
-
+  fullList$: Observable<Employee[]> | undefined;
   projects$ = this.http.get<any>(this.PROJECTS_GET_URL).subscribe(res =>{
     this.listOfProject = res;
     console.log("listOfProject ", this.listOfProject)
 })
 
 
-  constructor(private http: HttpClient, private apiService : ApiService, private store: Store<AppState>, pipe : DecimalPipe) {
+  constructor(private http: HttpClient,private store: Store<AppState>, pipe : DecimalPipe) {
 
       this.employeesList =[];
+      // this.store.subscribe((data) =>{
+      //   console.log("EMp store fullList : ", data);
+      //   this.fullList=data.empStore
+      // });
+
       this.filteredEmployee$ = this.filter.valueChanges.pipe(
         startWith(""),
         distinctUntilChanged(),
@@ -74,19 +81,8 @@ export class AppComponent {
       );
       console.log("jjj:", this.employees$, this.filteredEmployee$);
       this.empStores = store.select('empStore');
-    //   this.http.get<any>(this.SERVER_URL).subscribe(res =>{
-    //     this.listOfEmployee = res;
-    //     console.log("listOfEmployee ", this.listOfEmployee)
-    // })
-
-    // const asyncEmployees$ = of(this.listOfEmployee).pipe(
-    //   delay(10000),
-    //   tap(emps => (this.employeesList = emps))
-    // );
-
-
-
-
+    
+     
       // fromEvent(this.movieSearchInput.nativeElement, 'keyup').pipe(
 
       //   // get value
@@ -139,6 +135,9 @@ return this.employeesList.filter(list  => {
 }
 
 saveToStore(){
+  // const emp= [{"empId":"1","first_name":"Prema","last_name":"palanisamy","emailID":"prema@gmail.com","mobile":1234567890,"address":"omr","Active":true},
+  //       {"empId":"2","first_name":"Ram","last_name":"Santhanam","emailID":"ram@gmail.com","mobile":2234567890,"address":"omr","Active":true}]
+       
   // this.store.dispatch(new EmpActions.saveEmployees(...eps))
   // this.employeesList.forEach(emp =>{
     this.store.dispatch(new EmpActions.SaveAction(this.employeesList));
@@ -204,11 +203,14 @@ selectedProject(event : any, row : any, i : number){
 }
 viewEmployeeStore(){
   console.log("innnnks");
-   this.store.subscribe((data) =>{
-    console.log("data : ", data);
+  // this.store.dispatch(new EmpActions.getEmployees());
 
-    this.fullList= data.empStore;
-    console.log("view store : ", this.fullList);
-  });
+  //  this.store.subscribe((data) =>{
+  //   this.fullList = data.empStore;
+  //   console.log("view store 1: ", this.fullList );
+  // });
+  this.store.select(state => state).subscribe(state => console.log("dddd",{ state }));
+  this.fullList$ = this.store.select((store) => store.empStore);
+  console.log("view store2 : ", this.fullList$);
 }
 }

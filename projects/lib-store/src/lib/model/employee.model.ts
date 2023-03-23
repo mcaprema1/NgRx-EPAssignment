@@ -3,7 +3,7 @@ export interface Employee {
     first_name : string
     last_name : string
     emailID : string
-    mobile : string
+    mobile : number
     address : string
     Active : boolean
     projectId ?: string

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { AppState } from './app.state';
+import { AppState } from '../../../lib-store/src/lib/lib-store.util';
 import { Store } from '@ngrx/store';
-import * as DemoActions from './actions/emp.actions';
+import * as EmpActions from '../../../lib-store/src/lib/actions/emp.actions';
 
 @Component({
   selector: 'app-root',
@@ -15,11 +15,11 @@ export class AppComponent {
   registerForm: FormGroup | any;
     submitted = false;
     SERVER_URL = 'https://09a89f92-edc2-46ae-8b50-65bf2d58fab9.mock.pstmn.io/employee/save';
-
+    fullList :any
     // private store: Store<AppState>
 
     constructor(private formBuilder: FormBuilder,  private http: HttpClient,
-        ) { }
+        private store: Store<AppState>) { }
 
     ngOnInit() {
         this.registerForm = this.formBuilder.group({
@@ -32,36 +32,12 @@ export class AppComponent {
             Active:['']
         });
     }
-
-    // convenience getter for easy access to form fields
     get f() { return this.registerForm.controls; }
 
     onSubmit() {
         this.submitted = true;
-
-        // stop here if form is invalid
-        // if (this.registerForm.invalid) {
-        //     return;
-        // }
         const formData = new FormData();
-    formData.append('empdata',JSON.stringify(this.registerForm.value));
-
-        const emp= {"first_name":"Prema"}
-
-        console.log("formdata : ", emp, typeof(formData),formData, this.registerForm.value);
-        // const emp= [{"empId":"11025","first_name":"Prema","last_name":"palanisamy","emailID":"prema@gmail.com","mobile":1234567890,"address":"omr","Active":true}]
-        // {"empId":"11020","first_name":"Ram","last_name":"Santhanam","emailID":"ram@gmail.com","mobile":2234567890,"adress":"omr","Active":true}]
-        // JSON.stringify(this.registerForm.value)
-        let body = JSON.stringify(this.registerForm.value);
-        let headers = new Headers({'Content-Type': 'application/json'});
-        // let options: {
-        //     headers?: HttpHeaders | {[header: string]: string | string[]},
-        //     observe?: 'body' | 'events' | 'response',
-        //     params?: HttpParams|{[param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>},
-        //     reportProgress?: boolean,
-        //     responseType?: 'arraybuffer'|'blob'|'json'|'text',
-        //     withCredentials?: boolean,
-        // }
+        formData.append('empdata',JSON.stringify(this.registerForm.value));
         const requestOptions: Object = {
            responseType: 'text',
           'Content-Type': 'application/json'
@@ -69,30 +45,25 @@ export class AppComponent {
     this.http.post<any>(this.SERVER_URL, this.registerForm.value, requestOptions).subscribe
     ({
         next : (res) => {
-            console.log("res ", res, typeof(res) )
+            console.log("res : ", res, typeof(res) )
             let temp = JSON.parse(res)
-                   // console.log("temp type ", typeof(temp));
-            console.log("temp : ", temp,typeof(temp) )},
+            this.store.dispatch(new EmpActions.CreateEmployee(temp));
+                //    console.log("temp : ", temp,typeof(temp) )
+        },
         error : (err) => console.log("err : ", err)
     })
-
-
-
-        // display form values on success
-        // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
-        // this.store.dispatch(new DemoActions.AddEmp({
-        //     empId : this.registerForm.firstName,
-        //     first_name : this.registerForm.lastName,
-        //     last_name : this.registerForm.firstName,
-        //     emailID : this.registerForm.email,
-        //     mobile : this.registerForm.mobile,
-        //     address : this.registerForm.address
-        // }))
-        // console.log("this.store : ", this.store)
     }
 
     onReset() {
         this.submitted = false;
         this.registerForm.reset();
+    }
+
+    view(){
+        this.store.subscribe((data) =>{
+            console.log("view store 1: ", data )
+            this.fullList = data.empStore;
+            console.log("view store 1: ", this.fullList );
+          });
     }
 }

@@ -1,6 +1,7 @@
 
 <!-- <input type="text" #movieSearchInput  class="form-control" placeholder="Search" /> -->
 <!-- <button (click)="search()"> Search</button> -->
+<lib-lib-store>libray </lib-lib-store>
 <form>
   <div style="display:flex;">
   <div class="form-group form-inline" >
@@ -74,9 +75,10 @@
 </table>
 <br>
 <button (click)="saveToStore()"> Save to Store</button> &nbsp;&nbsp;
-<button (click)="viewEmployeeStore()" [disabled]="!viewStore"> View Store</button>"
- 
-<table class="table table-striped" *ngIf="viewStore">
+<button (click)="viewEmployeeStore()"> View Store</button>
+<!-- [disabled]="!viewStore" -->
+<table class="table table-striped" >
+  <!-- *ngIf="viewStore" -->
   <tr>
     <th> Emp Id </th>
     <th> First name </th>

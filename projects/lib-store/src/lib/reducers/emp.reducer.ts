@@ -1,7 +1,18 @@
 import { Action } from "@ngrx/store";
-import { Employee } from "../../../../model/employee.model";
+import { Employee } from "../model/employee.model";
 import {EmpAction, ActionTypes} from '../actions/emp.actions';
 import { createReducer, on } from '@ngrx/store';
+
+export interface EmployeeState {
+  empId : string
+    first_name : string
+    last_name : string
+    emailID : string
+    mobile : number
+    address : string
+    Active : boolean
+    projectId ?: string
+}
 
 const initialState: any = [];
 //  {
@@ -34,20 +45,23 @@ const initialState: any = [];
 //   ));
 export function empReducer(state = initialState, action:Action) {
   const tutorialAction = action as EmpAction;
-  console.log("reducer : ", tutorialAction, state, action);
-  console.log("save into store : ", tutorialAction.payload);
+  // console.log("reducer : ", tutorialAction, state, action);
+  // console.log("save into store : ", tutorialAction.payload);
 
   switch (action.type) {
 
     case ActionTypes.SAVE:
-      console.log("insude");
-
-      // return Object.assign({}, state, {
-      //   error: null,
-      //   tasks: [...state.tasks, tutorialAction.payload.task]
-      // });
+      console.log("inside");
       return [...state, ...tutorialAction.payload];
-      default:
+    case ActionTypes.CREATE:
+        console.log("tutorialAction.payload : ", tutorialAction.payload, state);
+        alert("Record has been saved in Store", )
+        return [...state, tutorialAction.payload];
+    case ActionTypes.GET:
+      console.log("get inside");
+      return [...state, tutorialAction.payload];
+    default:
         return state;
     }
+    
 }
