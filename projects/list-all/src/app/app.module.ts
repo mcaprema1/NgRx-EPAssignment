@@ -8,6 +8,7 @@ import { StoreModule } from '@ngrx/store';
 import { empReducer } from '../../../lib-store/src/lib/reducers/emp.reducer';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LibStoreModule } from 'projects/lib-store/src/public-api';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,11 @@ import { LibStoreModule } from 'projects/lib-store/src/public-api';
     HttpClientModule,
       FormsModule,
       ReactiveFormsModule,
-      LibStoreModule
+      LibStoreModule,
+      LibStoreModule,
+      StoreDevtoolsModule.instrument({
+        maxAge:25
+      })
   ],
 
   providers: [],

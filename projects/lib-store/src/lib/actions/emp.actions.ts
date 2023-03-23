@@ -74,7 +74,7 @@ export class CreateEmployee implements Action {
 export class loadEmployeeSuccess implements Action{
     type = ActionTypes.GET_SUCCESS;
     // props<{ gallery: GalleryEntity[] }>()
-    constructor(public payload: Employee[]) { }
+    constructor(public payload: any) {  console.log("LOAD emp success") }
 };
 
 export class getEmployees implements Action {

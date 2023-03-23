@@ -3,6 +3,8 @@ import { Employee } from "../model/employee.model";
 import {EmpAction, ActionTypes} from '../actions/emp.actions';
 import { createReducer, on } from '@ngrx/store';
 
+export const ENTITY_FEATURE_KEY = "entity";
+
 export interface EmployeeState {
   empId : string
     first_name : string
@@ -51,15 +53,16 @@ export function empReducer(state = initialState, action:Action) {
   switch (action.type) {
 
     case ActionTypes.SAVE:
-      console.log("inside");
+      console.log("inside", state, tutorialAction.payload);
       return [...state, ...tutorialAction.payload];
     case ActionTypes.CREATE:
         console.log("tutorialAction.payload : ", tutorialAction.payload, state);
         alert("Record has been saved in Store", )
         return [...state, tutorialAction.payload];
     case ActionTypes.GET:
-      console.log("get inside");
-      return [...state, tutorialAction.payload];
+      console.log("get inside", state, tutorialAction.payload);
+      // this.store.select(state => state).subscribe(state => console.log("dddd",{ state }));
+      return [...state];
     default:
         return state;
     }

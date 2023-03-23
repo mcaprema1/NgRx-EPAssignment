@@ -10,8 +10,9 @@ import { FormControl } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { Store , select} from '@ngrx/store';
 import { AppState } from '../../../lib-store/src/lib/lib-store.util';
-import * as EmpActions from '../../../lib-store/src/lib/actions/emp.actions';
 import { DecimalPipe } from "@angular/common";
+import { selectEmployees } from 'projects/lib-store/src/lib/selectors/emp.selector';
+import * as EmpActions from 'projects/lib-store/src/lib/actions/emp.actions';
 
 const PARAMS = new HttpParams({
   fromObject: {
@@ -35,7 +36,9 @@ export class AppComponent {
   public fullList : any = []
   full : any =[];
 
-  // listOfEmployee:Observable<string[]> | any;
+  Employeelist$:Observable<Employee[]> | any;
+  
+
   SERVER_URL = 'https://run.mocky.io/v3/e0183205-f538-45e2-85b1-20bf565280f2';
   PROJECTS_GET_URL = 'https://run.mocky.io/v3/c4da6857-f8ed-493d-8e61-e5ee346bf592';
 
@@ -81,36 +84,10 @@ export class AppComponent {
       );
       console.log("jjj:", this.employees$, this.filteredEmployee$);
       this.empStores = store.select('empStore');
-    
-     
-      // fromEvent(this.movieSearchInput.nativeElement, 'keyup').pipe(
-
-      //   // get value
-      //   map((event: any) => {
-      //     console.log("event.target.value : ", event.target.value);
-
-      //     return event.target.value;
-      //   })
-      //   , filter(res => res.length > 2)
-      //   , debounceTime(1000)
-      //   , distinctUntilChanged()
-      // ).subscribe((text: string) => {
-      //   this.isSearching = true;
-      //   this.searchGetCall(text, pipe).subscribe(( res: any) => {
-      //     console.log('res search  call', res);
-      //     this.isSearching = false;
-      //     this.apiResponse = res;
-      //   }, (err: any) => {
-      //     // this.isSearching = false;
-      //     console.log('error', err);
-      //   });
-
-      // });
-
      }
 
 ngOnInit() {
-
+  this.Employeelist$ = this.store.pipe(select(selectEmployees));
 
 }
 
@@ -140,62 +117,11 @@ saveToStore(){
        
   // this.store.dispatch(new EmpActions.saveEmployees(...eps))
   // this.employeesList.forEach(emp =>{
-    this.store.dispatch(new EmpActions.SaveAction(this.employeesList));
+    // this.store.dispatch(new EmpActions.SaveAction(this.employeesList));
   // })
-  alert("Data saved in Store")
+  // alert("Data saved in Store")
   this.viewStore=true;
 }
-
-
-// this.store.dispatch(new EmpActions.AddEmp(...eps
-//   ))
-//   let assignedProjects = this.store.select('empStore');
-//    assignedProjects.subscribe(data =>{
-//     console.log("store Value : ", data);
-//     alert(" Employee data has been saved in EmpStore !!!")
-//   })
-
-// ngAfterViewInit() {
-//   fromEvent(this.searchInput.nativeElement, 'input')
-//     .pipe(
-//       debounceTime(500),
-//       switchMap((value : any) => {
-//         return this.searchRequest(value);
-//       })
-//     )
-//     .subscribe((result: any) => {
-//       this.resultList = result;
-//     });
-// }
-
-// searchRequest(changedValue: string): any {
-//   return of(
-//     this.listOfEmployee.filter((x : any) =>
-//       x.toLowerCase().includes(changedValue.toLowerCase())
-//     )
-//   );
-// }
-
-// this.employees$ = this.searchTerms.pipe(
-//   debounceTime(300),
-//   distinctUntilChanged(),
-//   startWith(''),
-//   switchMap((term: string) => this.companyService.searchCompanies(term)),
-// );
-// }
-
-// search(){
-//   this.employees$ = of(this.listOfEmployee);
-//   this.filter = new FormControl('');
-//   this.filter$ = this.filter.valueChanges.pipe(startWith(''));
-//   this.filteredEmployee$ = combineLatest(this.employees$, this.filter$).pipe(
-//     map(([this.listOfEmployee, filterString]) => this.listOfEmployee.filter(state =>
-//       state.name.toLowerCase().indexOf(filterString.toLowerCase()) !== -1))
-//   );
-// }
-// search(term: string): void {
-//   this.searchTerms.next(term);
-// }
 
 selectedProject(event : any, row : any, i : number){
   row.projectId=event.target.value
@@ -203,7 +129,9 @@ selectedProject(event : any, row : any, i : number){
 }
 viewEmployeeStore(){
   console.log("innnnks");
-  // this.store.dispatch(new EmpActions.getEmployees());
+  console.log("this.Employeelist$ : ", this.Employeelist$);
+  
+  this.store.dispatch(new EmpActions.getEmployees('jj'));
 
   //  this.store.subscribe((data) =>{
   //   this.fullList = data.empStore;

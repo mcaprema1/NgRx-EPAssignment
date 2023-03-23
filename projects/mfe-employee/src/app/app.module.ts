@@ -9,6 +9,8 @@ import {HttpClientModule} from '@angular/common/http'
 import { StoreModule } from '@ngrx/store';
 import { empReducer } from '../../../lib-store/src/lib/reducers/emp.reducer';
 import { LibStoreModule } from 'projects/lib-store/src/public-api';
+import { StoreDevtools } from '@ngrx/store-devtools';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,10 @@ import { LibStoreModule } from 'projects/lib-store/src/public-api';
     // EffectsModule.forRoot([EmployeeEffects]),
     // StoreModule.forRoot({
     //   empStore: empReducer}),
-      LibStoreModule
+      LibStoreModule,
+      StoreDevtoolsModule.instrument({
+        maxAge:25
+      })
   ],
   providers: [],
   bootstrap: [AppComponent]

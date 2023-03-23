@@ -90,7 +90,7 @@
     <th> Projects</th>
   </tr>
   <!-- <ng-container *ngIf="employees$ | async"> -->
-    <tr *ngFor="let d of fullList; let i = index">
+    <tr *ngFor="let d of Employeelist$ | async; let i = index">
       <td> {{d.empId}}</td>
       <td> {{d.first_name}}</td>
       <td> {{d.last_name}} </td>

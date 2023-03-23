@@ -7,6 +7,7 @@ export interface Employee {
     address : string
     Active : boolean
     projectId ?: string
+    load ? : boolean
 }
 
 export interface Project{

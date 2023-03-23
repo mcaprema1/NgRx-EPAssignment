@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AppState } from '../../../lib-store/src/lib/lib-store.util';
 import { Store } from '@ngrx/store';
-import * as EmpActions from '../../../lib-store/src/lib/actions/emp.actions';
+import * as EmpActions from 'projects/lib-store/src/lib/actions/emp.actions';
 
 @Component({
   selector: 'app-root',
@@ -45,7 +45,7 @@ export class AppComponent {
     this.http.post<any>(this.SERVER_URL, this.registerForm.value, requestOptions).subscribe
     ({
         next : (res) => {
-            console.log("res : ", res, typeof(res) )
+            // console.log("res : ", res, typeof(res) )
             let temp = JSON.parse(res)
             this.store.dispatch(new EmpActions.CreateEmployee(temp));
                 //    console.log("temp : ", temp,typeof(temp) )
@@ -60,8 +60,9 @@ export class AppComponent {
     }
 
     view(){
+        this.store.dispatch(new EmpActions.getEmployees('kk'));
         this.store.subscribe((data) =>{
-            console.log("view store 1: ", data )
+            // console.log("view store 1: ", data )
             this.fullList = data.empStore;
             console.log("view store 1: ", this.fullList );
           });
