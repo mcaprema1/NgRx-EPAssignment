@@ -25,21 +25,20 @@ saveStore() {
     delay(1000)
   )
 }
-save(record: Employee[]) {
-  console.log("save api service", record);
-
-  // let record= this.http.post<Task>(this.API_TASKS_URL, record);
-  // record.id = `${++this.COUNT}`;
-  return of(record);
-}
+// save(record: Employee[]) {
+//   console.log("save api service", record);
+//   return of(record);
+// }
 getStore(){
   console.log("get store service", );
-  
+  let state$;
   this.store.select(state => state).subscribe(state => {
     console.log("dddd",state.empStore);
+    state$ = state.empStore
+    // return state.empStore
   });
-  return this.http.get<Employee[]>(this.SERVER_URL).pipe(delay(1000)
-  )
+  return state$= this.store.select((store) => store.empStore);
+  // return this.http.get<Employee[]>(this.SERVER_URL).pipe(delay(1000));
 }
 
 }

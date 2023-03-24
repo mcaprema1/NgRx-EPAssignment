@@ -33,7 +33,7 @@ export class AppComponent {
   // listOfEmployee : Employee=[];
   public listOfEmployee : any = [];
   public listOfProject : any =[];
-  public fullList : any = []
+  public fullList : any
   full : any =[];
 
   Employeelist$:Observable<Employee[]> | any;
@@ -129,16 +129,22 @@ selectedProject(event : any, row : any, i : number){
 }
 viewEmployeeStore(){
   console.log("innnnks");
-  console.log("this.Employeelist$ : ", this.Employeelist$);
+  // console.log("this.Employeelist$ : ", this.Employeelist$);
   
-  this.store.dispatch(new EmpActions.getEmployees('jj'));
+  // this.store.dispatch(new EmpActions.getEmployees('jj'));
 
-  //  this.store.subscribe((data) =>{
-  //   this.fullList = data.empStore;
-  //   console.log("view store 1: ", this.fullList );
-  // });
-  this.store.select(state => state).subscribe(state => console.log("dddd",{ state }));
-  this.fullList$ = this.store.select((store) => store.empStore);
-  console.log("view store2 : ", this.fullList$);
+  // //  this.store.subscribe((data) =>{
+  // //   this.fullList = data.empStore;
+  // //   console.log("view store 1: ", this.fullList );
+  // // });
+  // this.store.select(state => state).subscribe(state => console.log("dddd",{ state }));
+  // this.fullList$ = this.store.select((store) => store.empStore);
+  // console.log("view store2 : ", this.fullList$);
+  this.store.dispatch(new EmpActions.getEmployees('GET'));
+  this.store.subscribe((data) =>{
+      // console.log("view store 1: ", data )
+      this.fullList = data.empStore;
+      console.log("view store LIST TABEL VIEW: ", this.fullList );
+    });
 }
 }

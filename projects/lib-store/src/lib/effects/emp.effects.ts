@@ -36,11 +36,11 @@ export class EmployeeEffects {
   // );
 
       saveEmps$ = createEffect(() =>this._actions.pipe(
-      ofType<Action.SaveAction>(Action.ActionTypes.SAVE),
+      ofType<Action.CreateEmployee>(Action.ActionTypes.CREATE),
       map(action => action.payload),
       mergeMap(payload => 
         this.apiService.getStore().pipe(
-          map(res => new Action.SaveActionSuccess( res )),
+          map(res => new Action.CreateEmployeeuccess( res )),
           catchError(error => this.handleError(error)))
         ) ) ) ;
       private handleError(error : any) {

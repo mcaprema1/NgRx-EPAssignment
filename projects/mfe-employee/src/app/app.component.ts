@@ -64,7 +64,7 @@ export class AppComponent {
         this.store.subscribe((data) =>{
             // console.log("view store 1: ", data )
             this.fullList = data.empStore;
-            console.log("view store 1: ", this.fullList );
+            console.log("view store 67: ", this.fullList );
           });
     }
 }

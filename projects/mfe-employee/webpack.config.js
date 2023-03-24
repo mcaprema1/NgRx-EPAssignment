@@ -32,7 +32,7 @@ module.exports = {
         // name: "mFEEmployee",
         // filename: "remoteEntry.js",
         // exposes: {
-        //     './Component': './projects/mfe-employee/src/app/app.component.ts',
+        //     './RemoteModule': './projects/mfe-employee/src/app/app.component.ts',
         // },        
         
         // For hosts (please adjust)

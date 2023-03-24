@@ -7,6 +7,7 @@ export enum ActionTypes {
   SAVE_SUCCESS = '[Employee] SAVE Success',
   ERROR = '[Employee] Error',
   CREATE = '[Employee] CREATE Requested',
+  CREATE_SUCCESS = '[Employee] CREATE Success',
   GET_SUCCESS = '[Employee] GET Success',
   GET = '[Employee] GET Requested'
 }
@@ -50,16 +51,16 @@ export enum ActionTypes {
 //   '[Employee] save Employees',
 //   (emps: any) => emps
 // );
-export class SaveAction implements Action {
- readonly type = ActionTypes.SAVE;
-  // constructor(public payload: { task: Employee }) { console.log("save action");}
-  constructor(public payload: Employee[]) {  console.log("save user") };
-}
+// export class SaveAction implements Action {
+//  readonly type = ActionTypes.SAVE;
+//   // constructor(public payload: { task: Employee }) { console.log("save action");}
+//   constructor(public payload: Employee[]) {  console.log("save user") };
+// }
 
-export class SaveActionSuccess implements Action {
-  type = ActionTypes.SAVE_SUCCESS;
-  constructor(public payload: Employee[] ) { console.log("save action SUCCESS") }
-}
+// export class SaveActionSuccess implements Action {
+//   type = ActionTypes.SAVE_SUCCESS;
+//   constructor(public payload: Employee[] ) { console.log("save action SUCCESS") }
+// }
 
 export class ErrorAction implements Action {
   type = ActionTypes.ERROR;
@@ -69,6 +70,11 @@ export class CreateEmployee implements Action {
   type = ActionTypes.CREATE;
   constructor(public payload: Employee) { console.log("create user");
    }
+  }
+
+  export class CreateEmployeeuccess implements Action {
+    type = ActionTypes.CREATE_SUCCESS;
+    constructor(public payload: Employee[] ) { console.log("CREATE action SUCCESS") }
   }
 
 export class loadEmployeeSuccess implements Action{
@@ -83,5 +89,5 @@ export class getEmployees implements Action {
 };
 
 
-export type EmpAction = SaveAction | SaveActionSuccess
-  | ErrorAction | CreateEmployee | loadEmployeeSuccess | getEmployees;
+export type EmpAction = ErrorAction | CreateEmployee |CreateEmployeeuccess | loadEmployeeSuccess | getEmployees
+//  | SaveAction | SaveActionSuccess

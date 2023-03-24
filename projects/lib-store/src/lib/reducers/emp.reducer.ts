@@ -52,9 +52,9 @@ export function empReducer(state = initialState, action:Action) {
 
   switch (action.type) {
 
-    case ActionTypes.SAVE:
-      console.log("inside", state, tutorialAction.payload);
-      return [...state, ...tutorialAction.payload];
+    // case ActionTypes.SAVE:
+    //   console.log("inside", state, tutorialAction.payload);
+    //   return [...state, ...tutorialAction.payload];
     case ActionTypes.CREATE:
         console.log("tutorialAction.payload : ", tutorialAction.payload, state);
         alert("Record has been saved in Store", )

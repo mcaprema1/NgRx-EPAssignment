@@ -22,10 +22,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    // EffectsModule.forRoot([EmployeeEffects]),
-    // StoreModule.forRoot({
-    //   empStore: empReducer}),
       LibStoreModule,
+      // StoreModule.forRoot({}),
       StoreDevtoolsModule.instrument({
         maxAge:25
       })

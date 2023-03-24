@@ -22,6 +22,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
       ReactiveFormsModule,
       LibStoreModule,
       LibStoreModule,
+      // StoreModule.forRoot({}),
       StoreDevtoolsModule.instrument({
         maxAge:25
       })

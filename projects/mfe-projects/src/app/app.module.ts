@@ -2,8 +2,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { LibStoreComponent, LibStoreModule } from 'lib-store';
-
+import { LibStoreModule } from 'projects/lib-store/src/public-api';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -17,7 +17,10 @@ import { AppComponent } from './app.component';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule, 
-   LibStoreModule
+    LibStoreModule,
+    StoreDevtoolsModule.instrument({
+    maxAge:25
+  })
   ],
   providers: [],
   bootstrap: [AppComponent]
