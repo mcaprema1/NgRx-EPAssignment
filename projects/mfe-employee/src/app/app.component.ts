@@ -35,9 +35,10 @@ export class AppComponent {
     get f() { return this.registerForm.controls; }
 
     onSubmit() {
+        if (this.registerForm.invalid) {
+                return;
+        }
         this.submitted = true;
-        const formData = new FormData();
-        formData.append('empdata',JSON.stringify(this.registerForm.value));
         const requestOptions: Object = {
            responseType: 'text',
           'Content-Type': 'application/json'
@@ -45,10 +46,8 @@ export class AppComponent {
     this.http.post<any>(this.SERVER_URL, this.registerForm.value, requestOptions).subscribe
     ({
         next : (res) => {
-            // console.log("res : ", res, typeof(res) )
             let temp = JSON.parse(res)
             this.store.dispatch(new EmpActions.CreateEmployee(temp));
-                //    console.log("temp : ", temp,typeof(temp) )
         },
         error : (err) => console.log("err : ", err)
     })

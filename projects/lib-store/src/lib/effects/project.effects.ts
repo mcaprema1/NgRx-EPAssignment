@@ -9,14 +9,12 @@ import * as Action from '../actions/project.actions';
 @Injectable()
 export class ProjectEffects {
   constructor(private apiService: ApiService, private _actions: Actions) { 
-    console.log("effects constructor ");
   }
-
       saveEmps$ = createEffect(() =>this._actions.pipe(
       ofType<Action.CreateProject>(Action.ActionTypes.CREATE),
       map(action => action.payload),
       mergeMap(payload => 
-        this.apiService.getStore().pipe(
+        this.apiService.getProjectStore().pipe(
           map(res => new Action.CREATEProjectSuccess( res )),
           catchError(error => this.handleError(error)))
         ) ) ) ;

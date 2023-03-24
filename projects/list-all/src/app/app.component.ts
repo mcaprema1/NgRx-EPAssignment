@@ -64,7 +64,6 @@ export class AppComponent {
     console.log("listOfProject ", this.listOfProject)
 })
 
-
   constructor(private http: HttpClient,private store: Store<AppState>, pipe : DecimalPipe) {
 
       this.employeesList =[];
@@ -102,9 +101,10 @@ return this.employeesList.filter(list  => {
     list.last_name.toLowerCase().includes(term) ||
     list.emailID.toLowerCase().includes(term) ||
     list.address.toLowerCase().includes(term) ||
-    // list.Active.valueOf() ||
+    list.mobile.toString().includes(term)
+    // list.Active.filter(item => Boolean(item)) ||
     // list.Active.valueOf()? String(list.Active).includes('true') : String(list.Active).includes('false')  ||
-    pipe.transform(list.mobile).includes(term)
+    // pipe.transform(list.mobile).includes(term)
   );
 });
 // }
@@ -112,13 +112,9 @@ return this.employeesList.filter(list  => {
 }
 
 saveToStore(){
-  // const emp= [{"empId":"1","first_name":"Prema","last_name":"palanisamy","emailID":"prema@gmail.com","mobile":1234567890,"address":"omr","Active":true},
-  //       {"empId":"2","first_name":"Ram","last_name":"Santhanam","emailID":"ram@gmail.com","mobile":2234567890,"address":"omr","Active":true}]
-       
-  // this.store.dispatch(new EmpActions.saveEmployees(...eps))
-  // this.employeesList.forEach(emp =>{
-    // this.store.dispatch(new EmpActions.SaveAction(this.employeesList));
-  // })
+  this.employeesList.forEach(emp =>{
+    this.store.dispatch(new EmpActions.SaveAction(this.employeesList));
+  })
   // alert("Data saved in Store")
   this.viewStore=true;
 }
@@ -129,17 +125,6 @@ selectedProject(event : any, row : any, i : number){
 }
 viewEmployeeStore(){
   console.log("innnnks");
-  // console.log("this.Employeelist$ : ", this.Employeelist$);
-  
-  // this.store.dispatch(new EmpActions.getEmployees('jj'));
-
-  // //  this.store.subscribe((data) =>{
-  // //   this.fullList = data.empStore;
-  // //   console.log("view store 1: ", this.fullList );
-  // // });
-  // this.store.select(state => state).subscribe(state => console.log("dddd",{ state }));
-  // this.fullList$ = this.store.select((store) => store.empStore);
-  // console.log("view store2 : ", this.fullList$);
   this.store.dispatch(new EmpActions.getEmployees('GET'));
   this.store.subscribe((data) =>{
       // console.log("view store 1: ", data )

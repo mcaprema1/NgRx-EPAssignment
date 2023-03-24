@@ -43,36 +43,6 @@
     </form>
   </div>
 </div><br>
-<!-- <table class="table table-striped" >
-  <tr>
-    <th> Project Id </th>
-    <th> Project Name </th>
-    <th> Description </th>
-  </tr>
-    <tr *ngFor="let d of listOfProject; let i = index">
-      <td> {{d.projectId}}</td>
-      <td> {{d.project_name}}</td>
-      <td> {{d.description}} </td>
-    </tr>
-</table>
-<br>
-<div class="card m-3">
-  <h2 class="card-header text-center">Assign Project</h2>
-  <table>
-    <tr>
-      <th> Project Id </th>
-      <th> Project Name</th>
-    </tr>
-    <tr *ngFor="let opt of listOfEmployee; let i=index;" >
-      <td > 
-        {{opt.empId}}
-      </td> 
-      <td> 
-        <select name="projects" [(ngModel)]="project" (change)="selectedProject($event, opt, i)">
-          <option *ngFor="let opt of listOfProject" [value]="opt.projectId">{{opt.project_name}}</option>
-        </select>
-      </td>
-    </tr>
-  </table> -->
 
+  <button class="btn btn-primary mr-1"(click)="view()">view</button>
 

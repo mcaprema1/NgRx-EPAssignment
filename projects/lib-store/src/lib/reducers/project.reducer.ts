@@ -1,6 +1,6 @@
 import { Action } from "@ngrx/store";
 import { Employee } from "../model/employee.model";
-import {EmpAction, ActionTypes} from '../actions/emp.actions';
+import { ProjectAction, ActionTypes} from '../actions/project.actions';
 import { createReducer, on } from '@ngrx/store';
 
 export const ENTITY_FEATURE_KEY = "entity";
@@ -15,19 +15,16 @@ export interface ProjectState {
 const initialState: any = [];
 
 export function projectReducer(state = initialState, action:Action) {
-  const projectAction = action as EmpAction;
-
+  const projectAction = action as ProjectAction;
+  console.log("projectAction.payload : ", action.type)
   switch (action.type) {
-
-    // case ActionTypes.SAVE:
-    //   console.log("inside", state, projectAction.payload);
-    //   return [...state, ...projectAction.payload];
+   
     case ActionTypes.CREATE:
-        console.log("projectAction.payload : ", projectAction.payload, state);
+        console.log("inside: ", state, projectAction.payload);
         alert("Record has been saved in Store", )
         return [...state, projectAction.payload];
     case ActionTypes.GET:
-      console.log("get inside", state, projectAction.payload);
+    //   console.log("get inside", state, projectAction.payload);
       // this.store.select(state => state).subscribe(state => console.log("dddd",{ state }));
       return [...state];
     default:

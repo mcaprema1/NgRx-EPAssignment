@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProjectState } from '../../../lib-store/src/lib/lib-store.util';
+import { ProjectState} from '../../../lib-store/src/lib/lib-store.util';
 import { Store } from '@ngrx/store';
 import * as ProActions from 'projects/lib-store/src/lib/actions/project.actions';
 
@@ -56,7 +56,6 @@ export class AppComponent {
     ({
         next : (res) => {
             console.log("res  project : ", res);
-            
             let temp = JSON.parse(res)
             this.store.dispatch(new ProActions.CreateProject(temp));
         },
@@ -69,4 +68,12 @@ export class AppComponent {
         this.projectForm.reset();
     }
 
+    view(){
+        this.store.dispatch(new ProActions.getProjects('kk'));
+        this.store.subscribe((data) =>{
+            console.log("view store 13: ", data )
+            // this.fullList = data.empStore;
+            // console.log("view store 67: ", this.fullList );
+          });
+    }
 }

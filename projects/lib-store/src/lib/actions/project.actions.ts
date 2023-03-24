@@ -37,5 +37,5 @@ export enum ActionTypes {
     constructor(public payload: any) { }
   }
    
-   export type EmpAction = ErrorAction | CreateProject | CREATEProjectSuccess | loadProjectSuccess | getProjects;
+   export type ProjectAction = ErrorAction | CreateProject | CREATEProjectSuccess | loadProjectSuccess | getProjects;
    

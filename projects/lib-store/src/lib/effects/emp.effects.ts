@@ -40,7 +40,7 @@ export class EmployeeEffects {
       map(action => action.payload),
       mergeMap(payload => 
         this.apiService.getStore().pipe(
-          map(res => new Action.CreateEmployeeuccess( res )),
+          map(res => new Action.CreateEmployeeSuccess( res )),
           catchError(error => this.handleError(error)))
         ) ) ) ;
       private handleError(error : any) {
